@@ -1,11 +1,10 @@
 FROM node:20-slim AS builder
 
 WORKDIR /app
-COPY package*.json ./
+COPY package.json ./
 
 ENV NODE_ENV=development
-RUN rm -rf node_modules
-RUN npm ci
+RUN npm install
 
 COPY . .
 RUN npm run build
