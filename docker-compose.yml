@@ -26,7 +26,7 @@ services:
       DB_NAME: cafe_manager
       DB_USER: postgres
       DB_PASSWORD: ${DB_PASSWORD}
-      ALLOWED_ORIGINS: '["http://localhost", "http://${SERVER_IP}"]'
+      ALLOWED_ORIGINS: '["http://localhost"]'
     volumes:
       - uploads_data:/app/uploads
     depends_on:
