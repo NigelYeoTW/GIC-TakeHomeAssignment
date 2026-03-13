@@ -12,7 +12,7 @@ const { Title } = Typography;
 export default function CafesPage() {
   const navigate = useNavigate();
   const [location, setLocation] = useState("");
-  const { data: cafes = [], isLoading } = useCafes(location || undefined);
+  const { data: cafes, isLoading } = useCafes(location || undefined);
   const deleteCafe = useDeleteCafe();
 
   const handleDelete = async (id) => {

@@ -14,7 +14,7 @@ export default function EmployeesPage() {
   const [searchParams] = useSearchParams();
   const cafeFilter = searchParams.get("cafe") || undefined;
 
-  const { data: employees = [], isLoading } = useEmployees(cafeFilter);
+  const { data: employees, isLoading } = useEmployees(cafeFilter);
   const deleteEmployee = useDeleteEmployee();
 
   const handleDelete = async (id) => {
