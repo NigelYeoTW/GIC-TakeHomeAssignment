@@ -1,0 +1,23 @@
+# Environment files — never commit real credentials
+.env
+.env.local
+.env.staging
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.python-version
+
+# Uploads
+uploads/
+
+# IDE
+.vscode/
+.idea/
