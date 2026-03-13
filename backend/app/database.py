@@ -5,8 +5,6 @@ from app.config import get_settings
 settings = get_settings()
 
 connect_args: dict = {"connect_timeout": 10}
-if settings.is_production:
-    connect_args.update({"sslmode": "require", "gssencmode": "disable"})
 
 engine = create_engine(
     settings.DATABASE_URL,
@@ -14,7 +12,6 @@ engine = create_engine(
     max_overflow=40,
     pool_pre_ping=True,
     pool_recycle=3600,
-    connect_args=connect_args,
     echo=settings.DEBUG,  # logs SQL in local/staging only
 )
 
