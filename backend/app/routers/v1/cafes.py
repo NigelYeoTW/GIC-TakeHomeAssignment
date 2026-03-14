@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Path, UploadFile, File, Form
 from app.schemas.cafe import CafeResponse
 from app.mediator import Mediator
 from app.dependencies import get_mediator
-from app.commands.cafe_commands import GetCafesQuery, CreateCafeCommand, UpdateCafeCommand, DeleteCafeCommand
+from app.commands.cafe_commands import GetCafesQuery, GetCafeByIdQuery, CreateCafeCommand, UpdateCafeCommand, DeleteCafeCommand
 
 router = APIRouter(prefix="/cafes", tags=["Cafes"])
 
@@ -13,6 +13,14 @@ def get_cafes(
     mediator: Mediator = Depends(get_mediator),
 ):
     return mediator.send(GetCafesQuery(location=location))
+
+
+@router.get("/{cafe_id}", response_model=CafeResponse)
+def get_cafe(
+    cafe_id: str = Path(..., pattern=r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"),
+    mediator: Mediator = Depends(get_mediator),
+):
+    return mediator.send(GetCafeByIdQuery(cafe_id=cafe_id))
 
 
 @router.post("", response_model=CafeResponse, status_code=201)

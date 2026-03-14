@@ -8,6 +8,11 @@ class GetCafesQuery:
 
 
 @dataclass
+class GetCafeByIdQuery:
+    cafe_id: str
+
+
+@dataclass
 class CreateCafeCommand:
     name: str
     description: str

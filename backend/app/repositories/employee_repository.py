@@ -22,7 +22,7 @@ class EmployeeRepository(EmployeeRepositoryInterface):
     def get_all(self, cafe_name: str | None) -> list[tuple[Employee, int, str | None]]:
         try:
             days_worked = func.coalesce(
-                func.extract("day", func.now() - CafeEmployee.start_date).cast(Integer), 0
+                (func.current_date() - CafeEmployee.start_date).cast(Integer), 0
             ).label("days_worked")
 
             query = (

@@ -16,6 +16,11 @@ class CafeService:
     def __init__(self, repo: CafeRepositoryInterface):
         self.repo = repo
 
+    def get_by_id(self, cafe_id: str) -> CafeResponse:
+        cafe = self._get_or_404(cafe_id)
+        count = self.repo.get_employee_count(cafe_id)
+        return CafeResponse.model_validate({**orm_to_dict(cafe), "employees": count})
+
     def get_all(self, location: str | None) -> list[CafeResponse]:
         results = self.repo.get_all(location)
         return [

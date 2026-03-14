@@ -1,5 +1,6 @@
 from app.commands.cafe_commands import (
     GetCafesQuery,
+    GetCafeByIdQuery,
     CreateCafeCommand,
     UpdateCafeCommand,
     DeleteCafeCommand,
@@ -14,6 +15,14 @@ class GetCafesHandler:
 
     def handle(self, command: GetCafesQuery):
         return self.service.get_all(command.location)
+
+
+class GetCafeByIdHandler:
+    def __init__(self, service: CafeService):
+        self.service = service
+
+    def handle(self, command: GetCafeByIdQuery):
+        return self.service.get_by_id(command.cafe_id)
 
 
 class CreateCafeHandler:

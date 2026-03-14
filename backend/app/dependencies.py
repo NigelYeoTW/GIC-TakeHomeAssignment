@@ -9,9 +9,9 @@ from app.services.cafe_service import CafeService
 from app.services.employee_service import EmployeeService
 from app.mediator import Mediator
 from app.behaviours.logging_behaviour import LoggingBehaviour
-from app.commands.cafe_commands import GetCafesQuery, CreateCafeCommand, UpdateCafeCommand, DeleteCafeCommand
+from app.commands.cafe_commands import GetCafesQuery, GetCafeByIdQuery, CreateCafeCommand, UpdateCafeCommand, DeleteCafeCommand
 from app.commands.employee_commands import GetEmployeesQuery, CreateEmployeeCommand, UpdateEmployeeCommand, DeleteEmployeeCommand
-from app.handlers.cafe_handlers import GetCafesHandler, CreateCafeHandler, UpdateCafeHandler, DeleteCafeHandler
+from app.handlers.cafe_handlers import GetCafesHandler, GetCafeByIdHandler, CreateCafeHandler, UpdateCafeHandler, DeleteCafeHandler
 from app.handlers.employee_handlers import GetEmployeesHandler, CreateEmployeeHandler, UpdateEmployeeHandler, DeleteEmployeeHandler
 
 
@@ -54,6 +54,7 @@ def get_mediator(
     mediator.register_behaviour(LoggingBehaviour())
 
     mediator.register_handler(GetCafesQuery, GetCafesHandler(cafe_service))
+    mediator.register_handler(GetCafeByIdQuery, GetCafeByIdHandler(cafe_service))
     mediator.register_handler(CreateCafeCommand, CreateCafeHandler(cafe_service))
     mediator.register_handler(UpdateCafeCommand, UpdateCafeHandler(cafe_service))
     mediator.register_handler(DeleteCafeCommand, DeleteCafeHandler(cafe_service))
