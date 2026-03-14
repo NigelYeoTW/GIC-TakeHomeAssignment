@@ -31,7 +31,7 @@ export default function CafesPage() {
       width: 80,
       cellRenderer: ({ value }) =>
         value ? (
-          <Avatar src={value} shape="square" size={36} />
+          <Avatar src={`${import.meta.env.VITE_API_URL}/${value}`} shape="square" size={36} />
         ) : (
           <Avatar shape="square" size={36}>☕</Avatar>
         ),
