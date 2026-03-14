@@ -20,15 +20,18 @@ services:
       context: ./backend
     restart: unless-stopped
     environment:
-      ENV: production
+      ENV: local
       DB_HOST: postgres
       DB_PORT: 5432
       DB_NAME: cafe_manager
       DB_USER: postgres
       DB_PASSWORD: ${DB_PASSWORD}
+      PORT: 8000
       ALLOWED_ORIGINS: '["http://localhost"]'
     volumes:
       - uploads_data:/app/uploads
+    ports:
+      - "8000:8000"
     depends_on:
       postgres:
         condition: service_healthy  # wait until postgres passes healthcheck
@@ -37,6 +40,8 @@ services:
     build:
       context: ./frontend
     restart: unless-stopped
+    environment:
+      VITE_API_URL: http://backend:8000 
     ports:
       - "80:80"  # only the frontend is exposed to the internet
     depends_on:
