@@ -62,7 +62,7 @@ class CafeService:
         cafe = self._get_or_404(cafe_id)
         if cafe.logo:
             delete_logo(cafe.logo)
-        self.repo.delete(cafe)
+        self.repo.delete_with_employees(cafe)
 
     def _get_or_404(self, cafe_id: str) -> Cafe:
         cafe = self.repo.get_by_id(cafe_id)

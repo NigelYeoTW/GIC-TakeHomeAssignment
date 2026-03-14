@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchCafes, fetchCafeById, createCafe, updateCafe, deleteCafe } from "../api/cafes";
+import { EMPLOYEES_KEY } from "./useEmployees";
 
 export const CAFES_KEY = "cafes";
 
@@ -36,6 +37,9 @@ export const useDeleteCafe = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteCafe,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [CAFES_KEY] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [CAFES_KEY] });
+      queryClient.invalidateQueries({ queryKey: [EMPLOYEES_KEY] });
+    },
   });
 };

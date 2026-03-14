@@ -30,6 +30,10 @@ class CafeRepositoryInterface(ABC):
     def delete(self, cafe: Cafe) -> None:
         ...
 
+    @abstractmethod
+    def delete_with_employees(self, cafe: Cafe) -> None:
+        ...
+
 
 class EmployeeRepositoryInterface(ABC):
 

@@ -89,3 +89,16 @@ class CafeRepository(CafeRepositoryInterface):
             self.db.rollback()
             logger.error("cafe.delete.failed", error=str(e), cafe_id=cafe.id)
             raise DatabaseException()
+
+    def delete_with_employees(self, cafe: Cafe) -> None:
+        from app.models.employee import Employee
+        try:
+            subquery = self.db.query(CafeEmployee.employee_id).filter(CafeEmployee.cafe_id == cafe.id).subquery()
+            self.db.query(Employee).filter(Employee.id.in_(subquery)).delete(synchronize_session=False)
+            self.db.delete(cafe)
+            self.db.commit()
+            logger.info("cafe.deleted_with_employees", cafe_id=cafe.id)
+        except SQLAlchemyError as e:
+            self.db.rollback()
+            logger.error("cafe.delete_with_employees.failed", error=str(e), cafe_id=cafe.id)
+            raise DatabaseException()
