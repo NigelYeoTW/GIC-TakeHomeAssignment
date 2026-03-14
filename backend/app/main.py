@@ -1,10 +1,12 @@
 import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from app.config import get_settings
+from app.database import Base, engine
 from app.routers.v1 import v1_router
 from app.utils.logger import get_logger, setup_logging
 from app.utils.exceptions import AppException
@@ -13,11 +15,18 @@ setup_logging()
 logger = get_logger(__name__)
 settings = get_settings()
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)  # creates tables if they don't exist
+    yield
+
 app = FastAPI(
     title=settings.APP_NAME,
     debug=settings.DEBUG,
     docs_url="/docs" if not settings.is_production else None,
     redoc_url="/redoc" if not settings.is_production else None,
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -27,7 +36,6 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Content-Type", "Authorization"],
 )
-
 
 @app.exception_handler(AppException)
 async def app_exception_handler(request: Request, exc: AppException):

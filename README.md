@@ -1,3 +1,108 @@
-# GIC-TakeHomeAssignment
+# Café Employee Manager
 
-This is a fullstack application for GIC take home assignment
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose
+
+> For local development without Docker, you also need Python 3.11+, Node.js 20+, PostgreSQL, and [Poetry](https://python-poetry.org/docs/#installation).
+
+---
+
+## Running with Docker (recommended)
+
+1. Copy the environment file and set a database password:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit `.env` and set `DB_PASSWORD` to a value of your choice.
+
+2. Build and start all services:
+
+   ```bash
+   docker compose up --build
+   ```
+
+3. In a separate terminal, seed the database with sample data:
+
+   ```bash
+   docker compose exec backend poetry run python seed.py
+   ```
+
+The app is available at `http://localhost`.
+Backend API docs are available at `http://localhost:8000/docs`.
+
+---
+
+## Running locally (without Docker)
+
+### Backend
+
+1. Install dependencies:
+
+   ```bash
+   cd backend
+   poetry install
+   ```
+
+2. Set up the environment file:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Edit `backend/.env.local` and fill in your PostgreSQL credentials:
+
+   ```env
+   ENV=local
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=cafe_manager
+   DB_USER=postgres
+   DB_PASSWORD=yourpassword
+   UPLOAD_DIR=uploads
+   ALLOWED_ORIGINS=["http://localhost:5173"]
+   ```
+
+3. Seed the database:
+
+   ```bash
+   ENV=local poetry run python seed.py
+   ```
+
+4. Start the API server:
+
+   ```bash
+   ENV=local poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+   API available at `http://localhost:8000` · Interactive docs at `http://localhost:8000/docs`.
+
+### Frontend
+
+1. Install dependencies:
+
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. Start the dev server:
+
+   ```bash
+   npm run dev
+   ```
+
+   App available at `http://localhost:5173`.
+
+   > Vite proxies `/api` and `/uploads` to `http://localhost:8000`, so no CORS configuration is needed locally.
+
+---
+
+## Running tests
+
+```bash
+cd backend
+ENV=local poetry run pytest
+```
