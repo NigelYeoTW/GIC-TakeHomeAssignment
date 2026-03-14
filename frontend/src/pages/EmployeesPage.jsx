@@ -61,9 +61,14 @@ export default function EmployeesPage() {
         <Title level={4} className="!m-0">
           {cafeFilter ? `Employees — ${cafeFilter}` : "Employees"}
         </Title>
-        <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate("/employees/new")}>
-          Add New Employee
-        </Button>
+        <Space>
+          {cafeFilter && (
+            <Button onClick={() => navigate("/employees")}>Show All</Button>
+          )}
+          <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate("/employees/new")}>
+            Add New Employee
+          </Button>
+        </Space>
       </div>
 
       <div className="ag-theme-quartz h-[500px]">
