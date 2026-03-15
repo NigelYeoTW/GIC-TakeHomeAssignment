@@ -128,7 +128,7 @@ class TestDelete:
 
         service.delete(CAFE_ID)
 
-        mock_cafe_repo.delete.assert_called_once_with(cafe)
+        mock_cafe_repo.delete_with_employees.assert_called_once_with(cafe)
 
     def test_raises_404_when_cafe_not_found(self, mock_cafe_repo):
         mock_cafe_repo.get_by_id.return_value = None
