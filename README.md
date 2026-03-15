@@ -136,3 +136,9 @@ $env:ENV="local"; poetry run pytest
 ## Live URL
 
 https://gic-takehomeassignment-cafemanager.onrender.com/
+
+---
+
+## Architecture Notes
+
+The backend follows a layered architecture where routers handle HTTP concerns, services contain business logic, and repositories abstract database access. Dependencies are injected via FastAPI's `Depends`, which serves the same role as Autofac in a .NET project, registering and resolving dependencies without tight coupling between layers. The project also applies the Mediator pattern to decouple request handling from business logic, though at this scale it is not strictly necessary. It was included intentionally to meet the assessment criteria and to demonstrate how the pattern would benefit a larger codebase where many handlers would otherwise need direct references to multiple services.
