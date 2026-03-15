@@ -63,19 +63,36 @@ Backend API docs are available at `http://localhost:8000/docs`.
    DB_PASSWORD=yourpassword
    UPLOAD_DIR=uploads
    ALLOWED_ORIGINS=["http://localhost:5173"]
+   PORT=8000
    ```
 
-3. Seed the database:
+3. Create the database:
+    ```bash
+    psql -U postgres -c "CREATE DATABASE cafe_manager;"
+    ```
+    > On Windows if `psql` is not recognised, use the full path: `& "C:\Program Files\PostgreSQL\{version}\bin\psql.exe" -U postgres -c "CREATE DATABASE cafe_manager;"`
 
-   ```bash
-   ENV=local poetry run python seed.py
-   ```
+4. Seed the database:
 
-4. Start the API server:
+   **Mac/Linux:**
+    ```bash
+    ENV=local poetry run python seed.py
+    ```
+   **Windows:**
+    ```powershell
+    $env:ENV="local"; poetry run python seed.py
+    ```
 
-   ```bash
-   ENV=local poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-   ```
+5. Start the API server:
+
+   **Mac/Linux:**
+    ```bash
+    ENV=local poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    ```
+   **Windows:**
+    ```powershell
+    $env:ENV="local"; poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    ```
 
    API available at `http://localhost:8000` · Interactive docs at `http://localhost:8000/docs`.
 
@@ -102,7 +119,20 @@ Backend API docs are available at `http://localhost:8000/docs`.
 
 ## Running tests
 
+**Mac/Linux:**
 ```bash
 cd backend
 ENV=local poetry run pytest
 ```
+
+**Windows:**
+```powershell
+cd backend
+$env:ENV="local"; poetry run pytest
+```
+
+---
+
+## Live URL
+
+https://gic-takehomeassignment-cafemanager.onrender.com/
